@@ -29,6 +29,7 @@ struct Jacobian
 		{
 			cout << "\nMacierz odwrotna dla pc" << i + 1 << endl << setw(6) << J_invert[i][0][0] << ", " << setw(6) << J_invert[i][0][1] << endl << setw(6) << J_invert[i][1][0] << ", " << setw(6) << J_invert[i][1][1];
 		}
+		cout << endl;
 	}
 
 	void dNdXY(ElemUniv* elem, GlobalData* globalData)
@@ -181,7 +182,7 @@ Jacobian::Jacobian(Node* n1, Node* n2, Node* n3, Node* n4, ElemUniv* elem, Globa
 
 	for (int i = 0; i < globalData->npc; i++)
 	{
-		detJ.push_back(J[i][0][0] * J[i][0][0] - J[i][0][1] * J[i][1][1]);
+		detJ.push_back(J[i][0][0] * J[i][1][1] - J[i][0][1] * J[i][1][0]);
 	}
 
 	for (int i = 0; i < globalData->npc; i++)

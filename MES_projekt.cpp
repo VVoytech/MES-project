@@ -51,19 +51,17 @@ int main()
     n2->y = 0;
     n3->y = 0.025;
     n4->y = 0.025;
+    globalData->conductivity = 30;
 
     Jacobian jacobi(n1, n2, n3, n4, elem, globalData);
-    //jacobi.printData();
-    jacobi.dNdXY(elem, globalData);
-
-    //jacobi.print_dNdXY();
-    globalData->conductivity = 30;
+    jacobi.dNdXY(elem, globalData);;
     jacobi.add_matrixH(elem, globalData, factor2);
 
 
-    //elem->print_KsiEta();
-    jacobi.printData();
+    elem->print_KsiEta();
+    //jacobi.printData();
     //jacobi.print_dNdXY();
+    jacobi.print_matirxH();
 
     return 0;
 }
