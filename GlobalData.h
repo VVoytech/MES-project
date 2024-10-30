@@ -13,7 +13,7 @@ struct GlobalData
     int specificHeat;
     int nodeNumber;
     int elementNumber;
-    int npc = 4;
+    int npc;
 
     void print_globalData()
     {
