@@ -8,7 +8,6 @@ struct ElemUniv
 
 	void newElemUniv(int npc, Factor* factor)
 	{
-		bool d = true;
 		for (int i = 0; i < factor->node.size(); i++)
 		{
 			for (int j = 0; j < factor->node.size(); j++)
@@ -21,31 +20,14 @@ struct ElemUniv
 				ksi.push_back(ksiTemp);
 			}
 
-			if (d)
+			for (int j = 0; j < factor->node.size(); j++)
 			{
-				for (int j = 0; j < factor->node.size(); j++)
-				{
-					vector<double> etaTemp;
-					etaTemp.push_back(-0.25 * (1 - factor->node[j]));
-					etaTemp.push_back(-0.25 * (1 + factor->node[j]));
-					etaTemp.push_back(0.25 * (1 + factor->node[j]));
-					etaTemp.push_back(0.25 * (1 - factor->node[j]));
-					eta.push_back(etaTemp);
-					d = false;
-				}
-			}
-			else
-			{
-				for (int j = 0; j < factor->node.size(); j++)
-				{
-					vector<double> etaTemp;
-					etaTemp.push_back(-0.25 * (1 - factor->node[(factor->node.size() - j-1)]));
-					etaTemp.push_back(-0.25 * (1 + factor->node[factor->node.size() - j-1]));
-					etaTemp.push_back(0.25 * (1 + factor->node[factor->node.size() - j-1]));
-					etaTemp.push_back(0.25 * (1 - factor->node[factor->node.size() - j-1]));
-					eta.push_back(etaTemp);
-					d = true;
-				}
+				vector<double> etaTemp;
+				etaTemp.push_back(-0.25 * (1 - factor->node[j]));
+				etaTemp.push_back(-0.25 * (1 + factor->node[j]));
+				etaTemp.push_back(0.25 * (1 + factor->node[j]));
+				etaTemp.push_back(0.25 * (1 - factor->node[j]));
+				eta.push_back(etaTemp);
 			}
 		}
 	}

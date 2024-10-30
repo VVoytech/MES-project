@@ -8,7 +8,7 @@ struct Factor
 
 };
 
-void add_factor(Factor* factor1, Factor* factor2, Factor* factor3)
+void add_factor(Factor* factor1, Factor* factor2, Factor* factor3, Factor* factor4)
 {
 	// Jednopunktowy
 	factor1->node.push_back(0);
@@ -27,4 +27,14 @@ void add_factor(Factor* factor1, Factor* factor2, Factor* factor3)
 	factor3->factor.push_back(5.0 / 9.0);
 	factor3->factor.push_back(8.0 / 9.0);
 	factor3->factor.push_back(5.0 / 9.0);
+
+	// Czteropunktowy
+	factor4->node.push_back(-0.861136);
+	factor4->node.push_back(-0.339981);
+	factor4->node.push_back(0.339981);
+	factor4->node.push_back(0.861136);
+	factor4->factor.push_back(0.347855);
+	factor4->factor.push_back(0.652145);
+	factor4->factor.push_back(0.652145);
+	factor4->factor.push_back(0.347855);
 }
