@@ -127,7 +127,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Element.cpp" />
+    <ClCompile Include="ElemUniv.cpp" />
+    <ClCompile Include="Factor.cpp" />
+    <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Integral.cpp" />
+    <ClCompile Include="Jakobian.cpp" />
+    <ClCompile Include="LoadData.cpp" />
     <ClCompile Include="MES_projekt.cpp" />
+    <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Element.h" />

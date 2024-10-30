@@ -1,12 +1,4 @@
-﻿#include "Node.h"
-#include "Element.h"
-#include "Grid.h"
-#include "GlobalData.h"
-#include "LoadData.h"
-#include "Factor.h"
-#include "Integral.h"
-#include "ElemUniv.h"
-#include "Jakobian.h"
+﻿#include "Library.h"
 
 int main()
 {

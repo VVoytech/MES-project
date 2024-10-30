@@ -1,8 +1,10 @@
 #pragma once
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
+#include "Node.h"
+#include "Element.h"
+#include "Grid.h"
+#include "LoadData.h"
+#include "GlobalData.h"
+#include "Integral.h"
+#include "ElemUniv.h"
+#include "Jakobian.h"
 using namespace std;
