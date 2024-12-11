@@ -37,6 +37,12 @@ Jacobian::Jacobian(Node* n1, Node* n2, Node* n3, Node* n4, ElemUniv* elem, Globa
         temp2D.push_back(temp);
         J_invert.push_back(temp2D);
     }
+
+    Hbc.resize(4, vector<double>(4, 0));
+}
+
+Jacobian::Jacobian()
+{
 }
 
 void Jacobian::dNdXY(ElemUniv* elem, GlobalData* globalData)
@@ -121,6 +127,20 @@ void Jacobian::add_matrixH(ElemUniv* elem, GlobalData* globalData, Factor* facto
     }
 }
 
+void Jacobian::add_boundary(int side, double detJ, ElemUniv* elem, GlobalData* globalData, Factor* factor)
+{
+    for (int i = 0; i < factor->factor.size(); i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                Hbc[j][k] += (elem->boundaryN[side][i][j] * elem->boundaryN[side][i][k] * factor->factor[i]) * detJ * globalData->alfa;
+            }
+        }
+    }
+}
+
 void Jacobian::printData()
 {
     for (int i = 0; i < J.size(); i++)
@@ -155,7 +175,7 @@ void Jacobian::print_dNdXY()
 
 void Jacobian::print_matirxH()
 {
-    cout << "\nMacierze H w punktach calkowania:\n";
+    /*cout << "\nMacierze H w punktach calkowania:\n";
     for (int i = 0; i < ilustrative_matrixH.size(); i++)
     {
         cout << "pc" << i + 1 << ":\n";
@@ -168,13 +188,25 @@ void Jacobian::print_matirxH()
             cout << endl;
         }
         cout << endl;
-    }
+    }*/
     cout << "\nMacierz H:\n";
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
             cout << setw(7) << matrixH[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void Jacobian::printHbc()
+{
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            cout << setw(3) << Hbc[i][j] << " ";
         }
         cout << endl;
     }

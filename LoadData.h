@@ -6,6 +6,7 @@
 #include <string>
 #include "Grid.h"
 #include "GlobalData.h"
+#include "Element.h"
 
 using namespace std;
 

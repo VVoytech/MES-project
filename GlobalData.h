@@ -18,6 +18,5 @@ struct GlobalData
     int elementNumber;
     int npc;
 
-    // Method to print global data
     void print_globalData();
 };

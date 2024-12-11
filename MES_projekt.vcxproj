@@ -131,17 +131,20 @@
     <ClCompile Include="ElemUniv.cpp" />
     <ClCompile Include="Factor.cpp" />
     <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="GlobalStructure.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Integral.cpp" />
     <ClCompile Include="Jakobian.cpp" />
     <ClCompile Include="LoadData.cpp" />
     <ClCompile Include="MES_projekt.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="VectorP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Element.h" />
     <ClInclude Include="Factor.h" />
     <ClInclude Include="GlobalData.h" />
+    <ClInclude Include="GlobalStructure.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Jakobian.h" />
     <ClInclude Include="Library.h" />
@@ -149,6 +152,7 @@
     <ClInclude Include="Integral.h" />
     <ClInclude Include="ElemUniv.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="VectorP.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,4 +7,5 @@
 #include "Integral.h"
 #include "ElemUniv.h"
 #include "Jakobian.h"
+#include "GlobalStructure.h"
 using namespace std;

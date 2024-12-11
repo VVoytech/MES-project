@@ -25,6 +25,35 @@ void ElemUniv::newElemUniv(int npc, Factor* factor)
             eta.push_back(etaTemp);
         }
     }
+    boundaryN.resize(4, std::vector<std::vector<double>>(factor->node.size(), std::vector<double>(4, 0.0)));
+
+    for (int i = factor->node.size() - 1; i >= 0; i--)
+    {
+        //Górna œciana
+        boundaryN[0][factor->node.size() - 1 - i][0] = 0.25 * (1 - factor->node[i]) * (1 - 1);
+        boundaryN[0][factor->node.size() - 1 - i][1] = 0.25 * (1 + factor->node[i]) * (1 - 1);
+        boundaryN[0][factor->node.size() - 1 - i][2] = 0.25 * (1 + factor->node[i]) * (1 + 1);
+        boundaryN[0][factor->node.size() - 1 - i][3] = 0.25 * (1 - factor->node[i]) * (1 + 1);
+
+        //Lewa œciana
+        boundaryN[1][factor->node.size() - 1 - i][0] = 0.25 * (1 - (-1)) * (1 - factor->node[i]);
+        boundaryN[1][factor->node.size() - 1 - i][1] = 0.25 * (1 + (-1)) * (1 - factor->node[i]);
+        boundaryN[1][factor->node.size() - 1 - i][2] = 0.25 * (1 + (-1)) * (1 + factor->node[i]);
+        boundaryN[1][factor->node.size() - 1 - i][3] = 0.25 * (1 - (-1)) * (1 + factor->node[i]);
+
+        //Dolna œciana
+        boundaryN[2][factor->node.size() - 1 - i][0] = 0.25 * (1 - factor->node[factor->node.size() - 1 - i]) * (1 - (-1));
+        boundaryN[2][factor->node.size() - 1 - i][1] = 0.25 * (1 + factor->node[factor->node.size() - 1 - i]) * (1 - (-1));
+        boundaryN[2][factor->node.size() - 1 - i][2] = 0.25 * (1 + factor->node[factor->node.size() - 1 - i]) * (1 + (-1));
+        boundaryN[2][factor->node.size() - 1 - i][3] = 0.25 * (1 - factor->node[factor->node.size() - 1 - i]) * (1 + (-1));
+
+        //Prawa œciana
+        boundaryN[3][factor->node.size() - 1 - i][0] = 0.25 * (1 - 1) * (1 - factor->node[factor->node.size() - 1 - i]);
+        boundaryN[3][factor->node.size() - 1 - i][1] = 0.25 * (1 + 1) * (1 - factor->node[factor->node.size() - 1 - i]);
+        boundaryN[3][factor->node.size() - 1 - i][2] = 0.25 * (1 + 1) * (1 + factor->node[factor->node.size() - 1 - i]);
+        boundaryN[3][factor->node.size() - 1 - i][3] = 0.25 * (1 - 1) * (1 + factor->node[factor->node.size() - 1 - i]);
+    }
+
 }
 
 // Wypisywanie wartoœci tabeli dNi/dKsi oraz dNi/dEta
@@ -51,4 +80,21 @@ void ElemUniv::print_KsiEta()
         cout << endl;
     }
     cout << endl;
+}
+
+void ElemUniv::print_BoundaryN()
+{
+    cout << "Funkcje ksztaltu na krawedziach:\n";
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < boundaryN[i].size(); j++)
+        {
+            for (int k = 0; k < 4; k++)
+            {
+                cout << boundaryN[i][j][k] << " ";
+            }
+            cout << "\n";
+        }
+        cout << "\n";
+    }
 }
