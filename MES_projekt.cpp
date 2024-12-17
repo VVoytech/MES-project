@@ -1,12 +1,4 @@
-﻿#include "Node.h"
-#include "Element.h"
-#include "Grid.h"
-#include "GlobalData.h"
-#include "LoadData.h"
-#include "Factor.h"
-#include "Integral.h"
-#include "ElemUniv.h"
-#include "Jakobian.h"
+﻿#include "Library.h"
 
 int main()
 {
@@ -24,46 +16,30 @@ int main()
     loadData("Test1_4_4.txt", grid, globalData); // Wczytanie danych z pliku .txt do elementów
 
     //globalData->print_globalData();  // Wypisanie danych z początku pliku .txt
-    //grid->print_nodes();  // Wypisanie węzłów z siatki
-    //grid->print_elements();  // Wypisanie węzłów należących do poszczególnych elementów
+    grid->print_nodes();  // Wypisanie węzłów z siatki
+    grid->print_elements();  // Wypisanie węzłów należących do poszczególnych elementów
 
-    /*gauss_1D(factor1, function1, -1, 1);
-    gauss_1D(factor2, function1, -1, 1);
-    gauss_1D(factor3, function1, -1, 1);
+    globalData->npc = 4;
+    elem->newElemUniv(globalData->npc, factor2);
+    elem->print_BoundaryN();
 
-    gauss_2D(factor1, function2, -1, 1, -1, 1);
-    gauss_2D(factor2, function2, -1, 1, -1, 1);
-    gauss_2D(factor3, function2, -1, 1, -1, 1);*/
+    grid->makeMatrixH(elem, globalData, factor2);
+    grid->makeHbc(elem, globalData, factor2);
+    grid->addHbcTomatrixH();
+    //grid->printHbc();
+    //grid->printMatrixH();
+    grid->makeVectorP(elem, globalData, factor2);
+    grid->printVectorP();
 
-    Node* n1 = new Node;
-    Node* n2 = new Node;
-    Node* n3 = new Node;
-    Node* n4 = new Node;
+    GlobalHMatrix* globalH = new GlobalHMatrix;
+    globalH->makeGlobalHMatrix(globalData, grid);
+    globalH->makeGlobalPVector(globalData, grid);
+    globalH->printGlobalHMatrix();
+    globalH->printGlobalPVector();
 
-    n1->x = 0;
-    n2->x = 0.025;
-    n3->x = 0.025;
-    n4->x = 0;
-
-    n1->y = 0;
-    n2->y = 0;
-    n3->y = 0.025;
-    n4->y = 0.025;
-
-    globalData->conductivity = 30;
-
-    elem->newElemUniv(globalData->npc, factor3);
-    globalData->npc = 9;
-
-    Jacobian jacobi(n1, n2, n3, n4, elem, globalData);
-    jacobi.dNdXY(elem, globalData);;
-    jacobi.add_matrixH(elem, globalData, factor3);
-
-
-    elem->print_KsiEta();
-    jacobi.printData();
-    jacobi.print_dNdXY();
-    jacobi.print_matirxH();
+    globalH->gauss();
+    //globalH->printGlobalHMatrix();
+    //globalH->printGlobalPVector();
 
     return 0;
 }

@@ -1,5 +1,12 @@
 #pragma once
-#include "Library.h"
+#include <iostream>
+#include <iomanip>
+#include <vector>
+#include "Grid.h"
+#include "Node.h"
+#include "Element.h"
+
+using namespace std;
 
 struct Grid
 {
@@ -8,29 +15,21 @@ struct Grid
     vector<Node> nodes;
     vector<Element> elements;
 
-    void print_nodes()
-    {
-        cout << "Nodes:\n";
-        for (int i = 0; i < nodeNumber; i++)
-        {
-            cout << setw(3) << i + 1 << ": " << setw(10) << nodes[i].x << ", " << setw(10) << nodes[i].y << endl;
-        }
-        cout << endl;
-    }
+    void print_nodes();
 
-    void print_elements()
-    {
-        cout << "Elements:\n";
+    void print_elements();
 
-        for (int i = 0; i < elementNumber; i++)
-        {
-            cout << setw(3) << i + 1 << ": ";
-            for (int j = 0; j < elements[i].nodes.size(); j++)
-            {
-                cout << setw(3) << elements[i].nodes[j] << ", ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-    }
+    void makeMatrixH(ElemUniv* elem, GlobalData* globalData, Factor* factor);
+
+    void makeHbc(ElemUniv* elem, GlobalData* globalData, Factor* factor);
+
+    void makeVectorP(ElemUniv* elem, GlobalData* globalData, Factor* factor);
+
+    void addHbcTomatrixH();
+
+    void printMatrixH();
+
+    void printHbc();
+
+    void printVectorP();
 };
