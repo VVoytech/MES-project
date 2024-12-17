@@ -1,6 +1,6 @@
 #include "GlobalStructure.h"
 
-void GlobalHMatrix::makeGlobalHMatrix(GlobalData* globalData, Grid* grid)
+void GlobalStructure::makeGlobalHMatrix(GlobalData* globalData, Grid* grid)
 {
 	globalH.resize(globalData->nodeNumber, vector<double>(globalData->nodeNumber, 0));
 	for (int k = 0; k < grid->elementNumber; k++)
@@ -16,7 +16,7 @@ void GlobalHMatrix::makeGlobalHMatrix(GlobalData* globalData, Grid* grid)
 	}
 }
 
-void GlobalHMatrix::makeGlobalPVector(GlobalData* globalData, Grid* grid)
+void GlobalStructure::makeGlobalPVector(GlobalData* globalData, Grid* grid)
 {
 	globalP.resize(globalData->nodeNumber, 0);
 	for (int i = 0; i < grid->elementNumber; i++)
@@ -28,8 +28,9 @@ void GlobalHMatrix::makeGlobalPVector(GlobalData* globalData, Grid* grid)
 	}
 }
 
-void GlobalHMatrix::gauss()
+void GlobalStructure::gauss()
 {
+	globalTemp.resize(globalP.size(), 0);
 	for (int k = 0; k < globalH.size() - 1; k++)
 	{
 		for (int i = k + 1; i < globalH.size(); i++)
@@ -48,19 +49,17 @@ void GlobalHMatrix::gauss()
 	for (int i = globalH.size() - 1; i >= 0; i--)
 	{
 
-		double x = globalP[i] / globalH[i][i];
-
-		cout << x << endl;
+		globalTemp[i] = globalP[i] / globalH[i][i];
 
 		for (int j = i - 1; j >= 0; j--)
 		{
-			globalP[j] -= globalH[j][i] * x;
+			globalP[j] -= globalH[j][i] * globalTemp[i];
 			globalH[j][i] = 0;
 		}
 	}
 }
 
-void GlobalHMatrix::printGlobalHMatrix()
+void GlobalStructure::printGlobalHMatrix()
 {
 	cout << "\nGlobalna macierz H\n";
 	for (int i = 0; i < globalH.size(); i++)
@@ -73,12 +72,22 @@ void GlobalHMatrix::printGlobalHMatrix()
 	}
 }
 
-void GlobalHMatrix::printGlobalPVector()
+void GlobalStructure::printGlobalPVector()
 {
 	cout << "\nGlobalny wektor P\n";
 	for (int i = 0; i < globalP.size(); i++)
 	{
 		cout << setprecision(11) << globalP[i] << "\n";
+	}
+	cout << endl;
+}
+
+void GlobalStructure::printGlobalTemp()
+{
+	cout << "\nGlobalne temperatury:\n";
+	for (int i = 0; i < globalTemp.size(); i++)
+	{
+		cout << globalTemp[i] << "\n";
 	}
 	cout << endl;
 }

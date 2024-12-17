@@ -3,10 +3,11 @@
 
 using namespace std;
 
-struct GlobalHMatrix
+struct GlobalStructure
 {
 	vector<vector<double>> globalH;
 	vector<double> globalP;
+	vector<double> globalTemp;
 
 	void makeGlobalHMatrix(GlobalData* globalData, Grid* grid);
 
@@ -17,4 +18,6 @@ struct GlobalHMatrix
 	void gauss();
 
 	void printGlobalPVector();
+
+	void printGlobalTemp();
 };
