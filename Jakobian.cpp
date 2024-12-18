@@ -2,6 +2,9 @@
 
 Jacobian::Jacobian(Node* n1, Node* n2, Node* n3, Node* n4, ElemUniv* elem, GlobalData* globalData)
 {
+    J.clear();
+    J_invert.clear();
+    detJ.clear();
     for (int i = 0; i < globalData->npc; i++)
     {
         vector<double> temp;
@@ -37,8 +40,6 @@ Jacobian::Jacobian(Node* n1, Node* n2, Node* n3, Node* n4, ElemUniv* elem, Globa
         temp2D.push_back(temp);
         J_invert.push_back(temp2D);
     }
-
-    Hbc.resize(4, vector<double>(4, 0));
 }
 
 Jacobian::Jacobian()
@@ -47,6 +48,8 @@ Jacobian::Jacobian()
 
 void Jacobian::dNdXY(ElemUniv* elem, GlobalData* globalData)
 {
+    dNdX.clear();
+    dNdY.clear();
     for (int i = 0; i < globalData->npc; i++)
     {
         vector<double> temp;
@@ -67,6 +70,8 @@ void Jacobian::dNdXY(ElemUniv* elem, GlobalData* globalData)
 
 void Jacobian::add_matrixH(ElemUniv* elem, GlobalData* globalData, Factor* factor)
 {
+    matrixH.clear();
+    ilustrative_matrixH.clear();
     int x, y;
     x = y = 0;
     bool p = true;

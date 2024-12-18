@@ -1,7 +1,7 @@
 #include "ElemUniv.h"
 
 // Tworzenie wartoœci tabeli dNi/dKsi oraz dNi/dEta
-void ElemUniv::newElemUniv(int npc, Factor* factor)
+void ElemUniv::newElemUniv(int npc, Factor* factor, GlobalData* globalData)
 {
     for (int i = 0; i < factor->node.size(); i++)
     {
@@ -54,6 +54,42 @@ void ElemUniv::newElemUniv(int npc, Factor* factor)
         boundaryN[3][factor->node.size() - 1 - i][3] = 0.25 * (1 - 1) * (1 + factor->node[factor->node.size() - 1 - i]);
     }
 
+    int x, y;
+    x = y = 0;
+    bool p = true;
+    for (int i = 0; i < globalData->npc; i++)
+    {
+        vector<double> NTemp;
+        NTemp.push_back(0.25 * (1 - factor->node[x]) * (1 - factor->node[y]));
+        NTemp.push_back(0.25 * (1 + factor->node[x]) * (1 - factor->node[y]));
+        NTemp.push_back(0.25 * (1 + factor->node[x]) * (1 + factor->node[y]));
+        NTemp.push_back(0.25 * (1 - factor->node[x]) * (1 + factor->node[y]));
+        N.push_back(NTemp);
+        if (p)
+        {
+            if (x < factor->node.size() - 1)
+            {
+                x++;
+            }
+            else
+            {
+                y++;
+                p = false;
+            }
+        }
+        else
+        {
+            if (x > 0)
+            {
+                x--;
+            }
+            else
+            {
+                y++;
+                p = true;
+            }
+        }
+    }
 }
 
 // Wypisywanie wartoœci tabeli dNi/dKsi oraz dNi/dEta
@@ -97,4 +133,18 @@ void ElemUniv::print_BoundaryN()
         }
         cout << "\n";
     }
+}
+
+void ElemUniv::print_N()
+{
+    cout << "Funkcje ksztaltu\n\n";
+    for (int i = 0; i < N.size(); i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            cout << setw(6) << N[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
 }

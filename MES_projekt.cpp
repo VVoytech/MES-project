@@ -9,32 +9,40 @@ int main()
 
     Factor* factor = new Factor(2);
     ElemUniv* elem = new ElemUniv;
-
-    //globalData->print_globalData();  // Wypisanie danych z początku pliku .txt
-    grid->print_nodes();  // Wypisanie węzłów z siatki
-    grid->print_elements();  // Wypisanie węzłów należących do poszczególnych elementów
-
-    elem->newElemUniv(globalData->npc, factor);
-    elem->print_BoundaryN();
-
-    grid->makeMatrixH(elem, globalData, factor);
-    grid->makeHbc(elem, globalData, factor);
-    grid->addHbcTomatrixH();
-    //grid->printHbc();
-    //grid->printMatrixH();
-    grid->makeVectorP(elem, globalData, factor);
-    grid->printVectorP();
-
+    elem->newElemUniv(globalData->npc, factor, globalData);
     GlobalStructure* globalStructure = new GlobalStructure;
-    globalStructure->makeGlobalHMatrix(globalData, grid);
-    globalStructure->makeGlobalPVector(globalData, grid);
-    globalStructure->printGlobalHMatrix();
-    globalStructure->printGlobalPVector();
+    globalStructure->makeGlobalTempVector(globalData, grid);
 
-    globalStructure->gauss();
-    globalStructure->printGlobalTemp();
-    //globalH->printGlobalHMatrix();
-    //globalH->printGlobalPVector();
+    for (int i = 0; i <= globalData->simulationTime; i += globalData->simulationStepTime)
+    {
+        globalStructure->globalH.clear();
+        globalStructure->globalP.clear();
+        globalStructure->globalC.clear();
+        //cout << "Czas symulacji [" << i << "]\n";
+        grid->makeMatrixH(elem, globalData, factor);
+        grid->makeHbc(elem, globalData, factor);
+        grid->addHbcTomatrixH();
+        grid->makeVectorP(elem, globalData, factor);
+        grid->makeMatrixC(elem, globalData, factor);
+
+        globalStructure->makeGlobalHMatrix(globalData, grid);
+        globalStructure->makeGlobalCMatrix(globalData, grid);
+        globalStructure->makeGlobalPVector(globalData, grid);
+
+        globalStructure->globalH = globalStructure->addCtoH(globalData);
+        globalStructure->globalP = globalStructure->addCtoP(globalData);
+
+        globalStructure->gauss();
+
+        //globalStructure->printGlobalHMatrix();
+        //globalStructure->printGlobalPVector();
+        //globalStructure->printGlobalTemp();
+        globalStructure->printMinMax();
+    }
+
+
+    //globalStructure->printGlobalHMatrix();
+    //globalStructure->printGlobalPVector();
 
     return 0;
 }
