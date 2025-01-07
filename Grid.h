@@ -25,6 +25,8 @@ struct Grid
 
     void makeVectorP(ElemUniv* elem, GlobalData* globalData, Factor* factor);
 
+    void makeMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor);
+
     void addHbcTomatrixH();
 
     void printMatrixH();

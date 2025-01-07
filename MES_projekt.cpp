@@ -4,42 +4,45 @@ int main()
 {
     Grid* grid = new Grid;
     GlobalData* globalData = new GlobalData;
-
-    Factor* factor1 = new Factor;
-    Factor* factor2 = new Factor;
-    Factor* factor3 = new Factor;
-    Factor* factor4 = new Factor;
-    add_factor(factor1, factor2, factor3, factor4);
-
-    ElemUniv* elem = new ElemUniv;
-
-    loadData("Test1_4_4.txt", grid, globalData); // Wczytanie danych z pliku .txt do elementów
-
-    //globalData->print_globalData();  // Wypisanie danych z początku pliku .txt
-    grid->print_nodes();  // Wypisanie węzłów z siatki
-    grid->print_elements();  // Wypisanie węzłów należących do poszczególnych elementów
-
+    loadData("Test2_4_4_MixGrid.txt", grid, globalData); // Wczytanie danych z pliku .txt do elementów
     globalData->npc = 4;
-    elem->newElemUniv(globalData->npc, factor2);
-    elem->print_BoundaryN();
 
-    grid->makeMatrixH(elem, globalData, factor2);
-    grid->makeHbc(elem, globalData, factor2);
-    grid->addHbcTomatrixH();
-    //grid->printHbc();
-    //grid->printMatrixH();
-    grid->makeVectorP(elem, globalData, factor2);
-    grid->printVectorP();
+    Factor* factor = new Factor(2);
+    ElemUniv* elem = new ElemUniv;
+    elem->newElemUniv(globalData->npc, factor, globalData);
+    GlobalStructure* globalStructure = new GlobalStructure;
+    globalStructure->makeGlobalTempVector(globalData, grid);
 
-    GlobalHMatrix* globalH = new GlobalHMatrix;
-    globalH->makeGlobalHMatrix(globalData, grid);
-    globalH->makeGlobalPVector(globalData, grid);
-    globalH->printGlobalHMatrix();
-    globalH->printGlobalPVector();
+    for (int i = 0; i <= globalData->simulationTime; i += globalData->simulationStepTime)
+    {
+        globalStructure->globalH.clear();
+        globalStructure->globalP.clear();
+        globalStructure->globalC.clear();
+        //cout << "Czas symulacji [" << i << "]\n";
+        grid->makeMatrixH(elem, globalData, factor);
+        grid->makeHbc(elem, globalData, factor);
+        grid->addHbcTomatrixH();
+        grid->makeVectorP(elem, globalData, factor);
+        grid->makeMatrixC(elem, globalData, factor);
 
-    globalH->gauss();
-    //globalH->printGlobalHMatrix();
-    //globalH->printGlobalPVector();
+        globalStructure->makeGlobalHMatrix(globalData, grid);
+        globalStructure->makeGlobalCMatrix(globalData, grid);
+        globalStructure->makeGlobalPVector(globalData, grid);
+
+        globalStructure->globalH = globalStructure->addCtoH(globalData);
+        globalStructure->globalP = globalStructure->addCtoP(globalData);
+
+        globalStructure->gauss();
+
+        //globalStructure->printGlobalHMatrix();
+        //globalStructure->printGlobalPVector();
+        //globalStructure->printGlobalTemp();
+        globalStructure->printMinMax();
+    }
+
+
+    //globalStructure->printGlobalHMatrix();
+    //globalStructure->printGlobalPVector();
 
     return 0;
 }

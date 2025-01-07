@@ -58,6 +58,7 @@ void loadData(const string& filename, Grid* grid, GlobalData* globalData)
 
         ss >> id >> comma >> node.x >> comma >> node.y;  // Wczytywanie numeru wezla, wspolrzedna X i Y
 
+        node.temp = globalData->initialTemp;
         grid->nodes.push_back(node);  // Dodajemy wezel do wektora
     }
 

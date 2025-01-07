@@ -136,6 +136,7 @@
     <ClCompile Include="Integral.cpp" />
     <ClCompile Include="Jakobian.cpp" />
     <ClCompile Include="LoadData.cpp" />
+    <ClCompile Include="MatrixC.cpp" />
     <ClCompile Include="MES_projekt.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="VectorP.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="LoadData.h" />
     <ClInclude Include="Integral.h" />
     <ClInclude Include="ElemUniv.h" />
+    <ClInclude Include="MatrixC.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="VectorP.h" />
   </ItemGroup>

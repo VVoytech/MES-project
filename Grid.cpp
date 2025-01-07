@@ -50,31 +50,32 @@ void Grid::makeHbc(ElemUniv* elem, GlobalData* globalData, Factor* factor)
     double detJ;
     for (int i = 0; i < elements.size(); i++)
     {
+        elements[i].jacobian.Hbc.resize(4, vector<double>(4, 0));
         if (nodes[elements[i].nodes[0] - 1].BC == 1 && nodes[elements[i].nodes[1] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[0] - 1].x - nodes[elements[i].nodes[1] - 1].x, 2) + pow(nodes[elements[i].nodes[0] - 1].y - nodes[elements[i].nodes[1] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].jacobian.add_boundary(2, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[1] - 1].BC == 1 && nodes[elements[i].nodes[2] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[1] - 1].x - nodes[elements[i].nodes[2] - 1].x, 2) + pow(nodes[elements[i].nodes[1] - 1].y - nodes[elements[i].nodes[2] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].jacobian.add_boundary(3, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[2] - 1].BC == 1 && nodes[elements[i].nodes[3] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[2] - 1].x - nodes[elements[i].nodes[3] - 1].x, 2) + pow(nodes[elements[i].nodes[2] - 1].y - nodes[elements[i].nodes[3] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].jacobian.add_boundary(0, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[3] - 1].BC == 1 && nodes[elements[i].nodes[0] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[3] - 1].x - nodes[elements[i].nodes[0] - 1].x, 2) + pow(nodes[elements[i].nodes[3] - 1].y - nodes[elements[i].nodes[0] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].jacobian.add_boundary(1, detJ, elem, globalData, factor);
         }
     }
@@ -85,34 +86,43 @@ void Grid::makeVectorP(ElemUniv* elem, GlobalData* globalData, Factor* factor)
     double detJ;
     for (int i = 0; i < elements.size(); i++)
     {
+        elements[i].vectorP.vectorP.clear();
         elements[i].vectorP.vectorP.resize(4, 0);
         if (nodes[elements[i].nodes[0] - 1].BC == 1 && nodes[elements[i].nodes[1] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[0] - 1].x - nodes[elements[i].nodes[1] - 1].x, 2) + pow(nodes[elements[i].nodes[0] - 1].y - nodes[elements[i].nodes[1] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].vectorP.addVectorP(2, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[1] - 1].BC == 1 && nodes[elements[i].nodes[2] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[1] - 1].x - nodes[elements[i].nodes[2] - 1].x, 2) + pow(nodes[elements[i].nodes[1] - 1].y - nodes[elements[i].nodes[2] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].vectorP.addVectorP(3, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[2] - 1].BC == 1 && nodes[elements[i].nodes[3] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[2] - 1].x - nodes[elements[i].nodes[3] - 1].x, 2) + pow(nodes[elements[i].nodes[2] - 1].y - nodes[elements[i].nodes[3] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].vectorP.addVectorP(0, detJ, elem, globalData, factor);
         }
 
         if (nodes[elements[i].nodes[3] - 1].BC == 1 && nodes[elements[i].nodes[0] - 1].BC == 1)
         {
             detJ = sqrt(pow(nodes[elements[i].nodes[3] - 1].x - nodes[elements[i].nodes[0] - 1].x, 2) + pow(nodes[elements[i].nodes[3] - 1].y - nodes[elements[i].nodes[0] - 1].y, 2)) / 2;
-            cout << detJ << endl;
+            //cout << detJ << endl;
             elements[i].vectorP.addVectorP(1, detJ, elem, globalData, factor);
         }
+    }
+}
+
+void Grid::makeMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor)
+{
+    for (int i = 0; i < elements.size(); i++)
+    {
+        elements[i].matrixC.addMatrixC(elem, globalData, factor, elements[i].jacobian.detJ);
     }
 }
 

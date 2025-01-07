@@ -7,5 +7,6 @@ struct Node
 {
     double x;
     double y;
+    double temp;
     bool BC = 0;
 };
