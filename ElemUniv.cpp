@@ -59,36 +59,15 @@ void ElemUniv::newElemUniv(int npc, Factor* factor, GlobalData* globalData)
     bool p = true;
     for (int i = 0; i < globalData->npc; i++)
     {
+        y = i / (globalData->npc / sqrt(globalData->npc));
+        x = i % (globalData->npc / static_cast<int>(sqrt(globalData->npc)));
+
         vector<double> NTemp;
         NTemp.push_back(0.25 * (1 - factor->node[x]) * (1 - factor->node[y]));
         NTemp.push_back(0.25 * (1 + factor->node[x]) * (1 - factor->node[y]));
         NTemp.push_back(0.25 * (1 + factor->node[x]) * (1 + factor->node[y]));
         NTemp.push_back(0.25 * (1 - factor->node[x]) * (1 + factor->node[y]));
         N.push_back(NTemp);
-        if (p)
-        {
-            if (x < factor->node.size() - 1)
-            {
-                x++;
-            }
-            else
-            {
-                y++;
-                p = false;
-            }
-        }
-        else
-        {
-            if (x > 0)
-            {
-                x--;
-            }
-            else
-            {
-                y++;
-                p = true;
-            }
-        }
     }
 }
 

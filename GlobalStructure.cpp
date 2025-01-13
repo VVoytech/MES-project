@@ -2,6 +2,7 @@
 
 void GlobalStructure::makeGlobalHMatrix(GlobalData* globalData, Grid* grid)
 {
+	globalH.clear();
 	globalH.resize(globalData->nodeNumber, vector<double>(globalData->nodeNumber, 0));
 	for (int k = 0; k < grid->elementNumber; k++)
 	{
@@ -18,6 +19,7 @@ void GlobalStructure::makeGlobalHMatrix(GlobalData* globalData, Grid* grid)
 
 void GlobalStructure::makeGlobalCMatrix(GlobalData* globalData, Grid* grid)
 {
+	globalC.clear();
 	globalC.resize(globalData->nodeNumber, vector<double>(globalData->nodeNumber, 0));
 	for (int k = 0; k < grid->elementNumber; k++)
 	{
@@ -34,6 +36,7 @@ void GlobalStructure::makeGlobalCMatrix(GlobalData* globalData, Grid* grid)
 
 void GlobalStructure::makeGlobalPVector(GlobalData* globalData, Grid* grid)
 {
+	globalP.clear();
 	globalP.resize(globalData->nodeNumber, 0);
 	for (int i = 0; i < grid->elementNumber; i++)
 	{
@@ -57,12 +60,10 @@ vector<double> GlobalStructure::addCtoP(GlobalData* globalData)
 {
 	vector<double> result(globalP.size(), 0.0);
 
-	// Mno¿enie macierzy przez wektor t0 oraz dzielenie przez deltaTau
 	for (int i = 0; i < globalC.size(); ++i) {
 		for (int j = 0; j < globalC.size(); ++j) {
 			result[i] += (globalC[i][j] / globalData->simulationStepTime) * globalTemp[j];
 		}
-		// Dodanie odpowiedniego elementu wektora P
 		result[i] += globalP[i];
 	}
 
@@ -71,12 +72,11 @@ vector<double> GlobalStructure::addCtoP(GlobalData* globalData)
 
 vector<vector<double>> GlobalStructure::addCtoH(GlobalData* globalData)
 {
-	vector<vector<double>> result(globalData->nodeNumber, vector<double>(globalData->nodeNumber, 0));
+	vector<vector<double>> result(globalH.size(), vector<double>(globalH.size(), 0));
 
-	for (int i = 0; i < globalData->nodeNumber; i++)
+	for (int i = 0; i < globalH.size(); i++)
 	{
-		vector<double> temp;
-		for (int j = 0; j < globalData->nodeNumber; j++)
+		for (int j = 0; j < globalH.size(); j++)
 		{
 			result[i][j] = globalH[i][j] + (globalC[i][j] / globalData->simulationStepTime);
 		}
@@ -168,12 +168,12 @@ void GlobalStructure::printMinMax()
 {
 	double min = globalTemp[0];
 	double max = globalTemp[0];
-	cout << "\nGlobalne temperatury min i max:\n";
+	cout << "\nmin i max: ";
 	for (int i = 0; i < globalTemp.size(); i++)
 	{
 		if (globalTemp[i] < min) min = globalTemp[i];
 		if (globalTemp[i] > max) max = globalTemp[i];
 	}
-	cout << min << " " << max << "\n\n";
+	cout << setw(7) << min << "  " << setw(7) << max << "\n";
 }
 

@@ -34,4 +34,6 @@ struct Grid
     void printHbc();
 
     void printVectorP();
+
+    void printMatrixC();
 };

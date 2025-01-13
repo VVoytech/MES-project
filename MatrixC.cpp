@@ -33,7 +33,7 @@ void MatrixC::addMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor,
         {
             for (int k = 0; k < 4; k++)
             {
-                matrixC[j][k] += ilustrative_matrixC[i][j][k] * factor->factor[x] * factor->factor[y];
+                matrixC[j][k] += (ilustrative_matrixC[i][j][k] * factor->factor[x] * factor->factor[y]);
             }
         }
         if (p)
@@ -60,5 +60,18 @@ void MatrixC::addMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor,
                 p = true;
             }
         }
+    }
+}
+
+void MatrixC::print_matirxc()
+{
+    cout << "\nMacierz C:\n";
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            cout << setw(7) << matrixC[i][j] << " ";
+        }
+        cout << endl;
     }
 }

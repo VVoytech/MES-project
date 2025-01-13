@@ -1,24 +1,13 @@
 ﻿#include "Library.h"
 
-int main()
+void finalFunction(ElemUniv* elem, GlobalData* globalData, GlobalStructure* globalStructure, Grid* grid, Factor* factor)
 {
-    Grid* grid = new Grid;
-    GlobalData* globalData = new GlobalData;
-    loadData("Test2_4_4_MixGrid.txt", grid, globalData); // Wczytanie danych z pliku .txt do elementów
-    globalData->npc = 4;
-
-    Factor* factor = new Factor(2);
-    ElemUniv* elem = new ElemUniv;
-    elem->newElemUniv(globalData->npc, factor, globalData);
-    GlobalStructure* globalStructure = new GlobalStructure;
-    globalStructure->makeGlobalTempVector(globalData, grid);
-
-    for (int i = 0; i <= globalData->simulationTime; i += globalData->simulationStepTime)
+    for (int i = globalData->simulationStepTime; i <= globalData->simulationTime; i += globalData->simulationStepTime)
     {
-        globalStructure->globalH.clear();
-        globalStructure->globalP.clear();
-        globalStructure->globalC.clear();
-        //cout << "Czas symulacji [" << i << "]\n";
+        
+        
+        
+        cout << "Czas symulacji [" << i << "s]";
         grid->makeMatrixH(elem, globalData, factor);
         grid->makeHbc(elem, globalData, factor);
         grid->addHbcTomatrixH();
@@ -37,12 +26,26 @@ int main()
         //globalStructure->printGlobalHMatrix();
         //globalStructure->printGlobalPVector();
         //globalStructure->printGlobalTemp();
+
+        //globalStructure->printGlobalTemp();
         globalStructure->printMinMax();
     }
+}
 
+int main()
+{
+    Grid* grid = new Grid;
+    GlobalData* globalData = new GlobalData;
+    loadData("Test2_4_4_MixGrid.txt", grid, globalData); // Wczytanie danych z pliku .txt do elementów
+    globalData->npc = 16;
 
-    //globalStructure->printGlobalHMatrix();
-    //globalStructure->printGlobalPVector();
+    Factor* factor = new Factor(4);
+    ElemUniv* elem = new ElemUniv;
+    elem->newElemUniv(globalData->npc, factor, globalData);
+    GlobalStructure* globalStructure = new GlobalStructure;
+    globalStructure->makeGlobalTempVector(globalData, grid);
+
+    finalFunction(elem, globalData, globalStructure, grid, factor);
 
     return 0;
 }

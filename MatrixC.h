@@ -15,4 +15,6 @@ struct MatrixC
 	MatrixC();
 
 	void addMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor, vector<double> detJ);
+
+	void print_matirxc();
 };

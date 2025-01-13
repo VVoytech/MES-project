@@ -11,8 +11,6 @@ struct Factor
     vector<double> factor;
 
     Factor(int nodeNum);
-
-    void add_factor(Factor* factor1, Factor* factor2, Factor* factor3, Factor* factor4);
 };
 
 
