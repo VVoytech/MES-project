@@ -71,7 +71,6 @@ void ElemUniv::newElemUniv(int npc, Factor* factor, GlobalData* globalData)
     }
 }
 
-// Wypisywanie wartoœci tabeli dNi/dKsi oraz dNi/dEta
 void ElemUniv::print_KsiEta()
 {
     cout << "Ksi\n\n";

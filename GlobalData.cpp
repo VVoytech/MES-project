@@ -1,6 +1,5 @@
 #include "GlobalData.h"
 
-// Method to print global data
 void GlobalData::print_globalData()
 {
     cout << "Simulation Time: " << simulationTime << endl;
