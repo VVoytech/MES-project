@@ -15,10 +15,6 @@ struct Grid
     vector<Node> nodes;
     vector<Element> elements;
 
-    void print_nodes();
-
-    void print_elements();
-
     void makeMatrixH(ElemUniv* elem, GlobalData* globalData, Factor* factor);
 
     void makeHbc(ElemUniv* elem, GlobalData* globalData, Factor* factor);
@@ -28,6 +24,10 @@ struct Grid
     void makeMatrixC(ElemUniv* elem, GlobalData* globalData, Factor* factor);
 
     void addHbcTomatrixH();
+
+    void print_nodes();
+
+    void print_elements();
 
     void printMatrixH();
 

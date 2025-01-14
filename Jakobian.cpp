@@ -180,20 +180,6 @@ void Jacobian::print_dNdXY()
 
 void Jacobian::print_matirxH()
 {
-    /*cout << "\nMacierze H w punktach calkowania:\n";
-    for (int i = 0; i < ilustrative_matrixH.size(); i++)
-    {
-        cout << "pc" << i + 1 << ":\n";
-        for (int j = 0; j < 4; j++)
-        {
-            for (int k = 0; k < 4; k++)
-            {
-                cout << setw(8) << ilustrative_matrixH[i][j][k] << " ";
-            }
-            cout << endl;
-        }
-        cout << endl;
-    }*/
     cout << "\nMacierz H:\n";
     for (int i = 0; i < 4; i++)
     {

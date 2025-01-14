@@ -10,5 +10,4 @@
 
 using namespace std;
 
-// Function declaration
 void loadData(const string& filename, Grid* grid, GlobalData* globalData);

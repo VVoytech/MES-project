@@ -47,7 +47,6 @@ void saveToVTK(Grid* grid, GlobalData* globalData, GlobalStructure* globalStruct
     std::cout << "Plik heat_step_" << step << ".vtk zapisany poprawnie.\n";
 }
 
-
 void finalFunction(ElemUniv* elem, GlobalData* globalData, GlobalStructure* globalStructure, Grid* grid, Factor* factor)
 {
     for (int i = globalData->simulationStepTime; i <= globalData->simulationTime; i += globalData->simulationStepTime)
@@ -72,7 +71,7 @@ void finalFunction(ElemUniv* elem, GlobalData* globalData, GlobalStructure* glob
         globalStructure->gauss();
         globalStructure->printMinMax();
 
-        saveToVTK(grid, globalData, globalStructure, "temperatury_out.vtk", i);
+        //saveToVTK(grid, globalData, globalStructure, "temperatury_out.vtk", i);
     }
 }
 
